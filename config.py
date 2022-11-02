@@ -1,10 +1,13 @@
 import os
+import pathlib
 
 
-app_dir = os.path.abspath(os.path.dirname(__file__))
+BASE_DIR = pathlib.Path(__file__).parent
 
 class BaseConfig(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'A SECRET KEY'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-know'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(BASE_DIR / "data" / "flask_db.sqlite3")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopementConfig(BaseConfig):
     DEBUG = True
