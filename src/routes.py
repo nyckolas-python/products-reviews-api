@@ -1,37 +1,56 @@
 from flask import request
 from flask_restful import Resource
+from marshmallow import ValidationError
+from sqlalchemy.orm import joinedload, selectinload
 
 from src import api, db
 from src.models import Product, Review
+from src.schemas import ProductSchema, ReviewSchema
 
 
 class ProductApi(Resource):
+    product_schema = ProductSchema()
+    reviews_schema = ReviewSchema()
+    
     def get(self, id=None):
-        product = db.session.query(Product).filter_by(id=id).first()
+        product = db.session.query(Product).options(
+            joinedload(Product.reviews)
+        ).filter_by(id=id).one_or_none()
         if not product:
             return {'message': 'there is no product with this id'}, 404
-        return {'message': 'OK'}
+        page = request.args.get('page', 0, type=int)
+        if 0 < page <= len(product.reviews):
+            reviews = db.session.query(Review)\
+                .filter_by(product_id=id)\
+                .paginate(page=page, per_page=1)
+
+            product.reviews.clear()
+            product.reviews.extend(reviews.items)
+        elif page > len(product.reviews):
+            return {'message': 'there is no page with this number'}, 404
+
+        return self.product_schema.dump(product), 200
 
     def post(self):
         return {'message': 'method not allowed'}, 405
 
     def put(self, id):
-        review_json = request.json
-        if not review_json:
-            return {'message': 'Wrong data'}, 400
+        product = db.session.query(Product).options(
+            joinedload(Product.reviews)
+        ).filter_by(id=id).one_or_none()
+        if not product:
+            return {'message': 'there is no product with this id'}, 404
         try:
-            review = Review(
-                product_id=id,
-                title=review_json['title'],
-                review=review_json['review']
-            )
+            review = self.reviews_schema.load(request.json, session=db.session)
+            print(review)
             db.session.add(review)
             db.session.commit()
-        except (ValueError, KeyError):
-            return {'message': 'Wrong data'}, 400
-        return {'message': 'Created successfully', 'id': review.id}, 201
+        except ValidationError as e:
+            return {'message': str(e)}, 400
+        
+        return self.product_schema.dump(product), 201
 
-    def delete(self, uuid):
+    def delete(self):
         return {'message': 'method not allowed'}, 405
 
 
