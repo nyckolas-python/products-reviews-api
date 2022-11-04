@@ -38,3 +38,19 @@ class Review(db.Model):
     
     def __repr__(self):
         return f"Review(product_id:{self.product_id} {self.title})"
+
+
+def get_paginate_reviews(product_id: int, page: int):
+    """Function return Pagination object Review related to product
+
+    Args:
+        product_id (int): Id of product the review is related to
+        page (int): current page from URL parameters
+
+    Returns:
+        List[Self]: Pagination object Review related to product
+    """
+    reviews = db.session.query(Review)\
+        .filter_by(product_id=id)\
+        .paginate(page=page, per_page=1)
+    return reviews
