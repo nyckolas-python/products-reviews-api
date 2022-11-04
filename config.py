@@ -11,6 +11,8 @@ class BaseConfig(object):
 
 class DevelopementConfig(BaseConfig):
     DEBUG = True
+    # SQLALCHEMY_ECHO = True
+    SQLALCHEMY_RECORD_QUERIES = True
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
