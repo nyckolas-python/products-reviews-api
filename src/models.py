@@ -19,7 +19,7 @@ class Product(db.Model):
             self.reviews = []
         else:
             self.reviews = reviews
-    
+
     def __repr__(self):
         return f"Product({self.asin} {self.title} {self.reviews})"
 
@@ -35,7 +35,7 @@ class Review(db.Model):
         self.title = title
         self.review = review
         self.product_id = product_id
-    
+
     def __repr__(self):
         return f"Review(product_id:{self.product_id} {self.title})"
 

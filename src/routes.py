@@ -3,7 +3,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 from sqlalchemy.orm import joinedload, selectinload
 
-from src import api, db
+from src import api, db, cache
 from src.models import Product, Review
 from src.schemas import ProductSchema, ReviewSchema
 
@@ -11,7 +11,8 @@ from src.schemas import ProductSchema, ReviewSchema
 class ProductApi(Resource):
     product_schema = ProductSchema()
     reviews_schema = ReviewSchema()
-    
+
+    @cache.cached(timeout=50)
     def get(self, id=None):
         product = db.session.query(Product).options(
             joinedload(Product.reviews)
@@ -34,6 +35,7 @@ class ProductApi(Resource):
     def post(self):
         return {'message': 'method not allowed'}, 405
 
+    @cache.cached(timeout=50)
     def put(self, id):
         product = db.session.query(Product).options(
             joinedload(Product.reviews)
@@ -47,7 +49,7 @@ class ProductApi(Resource):
             db.session.commit()
         except ValidationError as e:
             return {'message': str(e)}, 400
-        
+
         return self.product_schema.dump(product), 201
 
     def delete(self):

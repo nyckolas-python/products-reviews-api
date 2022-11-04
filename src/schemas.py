@@ -10,7 +10,8 @@ class ProductSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_fk = True
         fields = ('id', 'asin', 'title', 'reviews')
-    reviews = Nested('ReviewSchema', many=True, default=[], exclude=('products',))
+    reviews = Nested('ReviewSchema', many=True,
+                     default=[], exclude=('products',))
 
 
 class ReviewSchema(SQLAlchemyAutoSchema):

@@ -24,14 +24,14 @@ def save_products_to_db():
                     # filtering existing
                     exist = db.session.query(
                         Product.query.filter(
-                            Product.asin==row[1]
-                            ).exists()
-                        ).scalar()
+                            Product.asin == row[1]
+                        ).exists()
+                    ).scalar()
                     if not exist:
                         product = Product(
                             title=row[0],
                             asin=row[1]
-                            )
+                        )
                         db.session.add(product)
                         print(f"Product {row[1]} - was populated...")
                     else:
@@ -43,6 +43,7 @@ def save_products_to_db():
                 print('Products successfully loaded!')
     except Exception as error:
         print(f"{error}")
+
 
 def save_reviews_to_db():
     """
@@ -63,10 +64,10 @@ def save_reviews_to_db():
                     # filtering existing
                     product_reviews = db.session.query(
                         Product
-                            ).filter(
-                                Product.asin==row[0]
-                                ).one().reviews
-                    exist = [True if (review.title==row[1] and review.review==row[2])
+                    ).filter(
+                        Product.asin == row[0]
+                    ).one().reviews
+                    exist = [True if (review.title == row[1] and review.review == row[2])
                              else False
                              for review in product_reviews]
                     # print(not any(exist))
@@ -74,14 +75,14 @@ def save_reviews_to_db():
                     if not any(exist) or exist == []:
                         product_id = db.session.query(
                             Product
-                            ).filter(
-                                Product.asin==row[0]
-                                ).one().id
+                        ).filter(
+                            Product.asin == row[0]
+                        ).one().id
                         review = Review(
                             product_id=product_id,
                             title=row[1],
                             review=row[2]
-                            )
+                        )
                         db.session.add(review)
                         print(f"Rewiew for {row[0]} - was populated...")
                     else:
@@ -93,6 +94,7 @@ def save_reviews_to_db():
                 print('Reviews successfully loaded!')
     except Exception as error:
         print(f"{error}")
+
 
 if __name__ == '__main__':
     print('Load data from csv to db...')
