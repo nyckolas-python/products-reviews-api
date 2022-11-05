@@ -1,4 +1,3 @@
-from src import routes, models
 import config
 
 from flask import Flask
@@ -9,7 +8,7 @@ from flask_caching import Cache
 
 
 app = Flask(__name__)
-app.config.from_object(config.DevelopementConfig)
+app.config.from_object(config.ProductionConfig)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 api = Api(app)
@@ -34,3 +33,5 @@ def sql_debug(response):
 
 
 app.after_request(sql_debug)
+
+from src import routes, models
