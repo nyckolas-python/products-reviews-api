@@ -28,4 +28,4 @@ class ProductionConfig(BaseConfig):
     POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'pass')
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://' + \
         POSTGRES_USER + ':' + POSTGRES_PASSWORD + \
-        '@' + DB_HOST + '/' +POSTGRES_DB
+        '@' + DB_HOST + '/' + POSTGRES_DB
