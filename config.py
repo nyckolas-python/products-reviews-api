@@ -10,15 +10,22 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
         str(BASE_DIR / "data" / "flask_db.sqlite3")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CACHE_TYPE = 'SimpleCache'
+    CACHE_DEFAULT_TIMEOUT = 300
 
 
 class DevelopementConfig(BaseConfig):
     DEBUG = True
     # SQLALCHEMY_ECHO = True
     SQLALCHEMY_RECORD_QUERIES = True
-    CACHE_TYPE = 'SimpleCache'
-    CACHE_DEFAULT_TIMEOUT = 300
 
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
+    DB_HOST = os.environ.get('DB_HOST', 'postgres')
+    POSTGRES_DB = os.environ.get('POSTGRES_DB', 'flask_api_dev')
+    POSTGRES_USER = os.environ.get('POSTGRES_USER', 'flask_api_dev')
+    POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'pass')
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://' + \
+        POSTGRES_USER + ':' + POSTGRES_PASSWORD + \
+        '@' + DB_HOST + '/' +POSTGRES_DB
