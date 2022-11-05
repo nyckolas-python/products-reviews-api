@@ -10,6 +10,7 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + \
         str(BASE_DIR / "data" / "flask_db.sqlite3")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_RECORD_QUERIES = True
     CACHE_TYPE = 'SimpleCache'
     CACHE_DEFAULT_TIMEOUT = 300
 
@@ -17,7 +18,6 @@ class BaseConfig(object):
 class DevelopementConfig(BaseConfig):
     DEBUG = True
     # SQLALCHEMY_ECHO = True
-    SQLALCHEMY_RECORD_QUERIES = True
 
 
 class ProductionConfig(BaseConfig):
