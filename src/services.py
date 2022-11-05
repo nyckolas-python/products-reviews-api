@@ -2,12 +2,12 @@ from src.models import Product, Review
 
 class ProductService:
     @staticmethod
-    def fetch_all_product(session):
+    def fetch_all_products(session):
         return session.query(Product)
     
     @classmethod
     def fetch_product_by_id(cls, session, id):
-        return cls.fetch_all_product(session).filter_by(
+        return cls.fetch_all_products(session).filter_by(
             id=id
         )
 
