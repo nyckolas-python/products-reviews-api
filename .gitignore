@@ -2,10 +2,22 @@
 __pycache__/
 *.py[cod]
 *$py.class
+pgadmin/
+pgdata/
+data/db
+migrations/
+*/media/*
 migrations/*
+src/models_many.py
+data/flask_db.sqlite3
+csv_db_inserts_many.py
 
 # C extensions
 *.so
+
+# images
+!*/static/media/.gitkeep
+*/static/media/*
 
 # Distribution / packaging
 .Python
