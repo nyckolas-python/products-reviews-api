@@ -20,8 +20,8 @@ use command to give permissions run:
 8. Run to load dataset to DB `docker exec -it flask_api_web python csv_db_inserts_one.py`
 If an error occurs, repeat the command.
 9. Open http://localhost:5050/browser/ in browser pgAdmin
-10. Open http://127.0.0.1:8080/api/v1/product/1 in browser to view product and his reviews.
-11. Open http://127.0.0.1:8080/api/v1/product/1?page=1 in browser to paginate thrue reviews.
+10. Open http://localhost:5000/api/v1/product/1 in browser to view product and his reviews.
+11. Open http://localhost:5000/api/v1/product/1?page=1 in browser to paginate thrue reviews.
 12. You can use PUT with JSON to create new review. Example:
 
 `{

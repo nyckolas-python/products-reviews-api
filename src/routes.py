@@ -56,4 +56,4 @@ class ProductApi(Resource):
         return {'message': 'method not allowed'}, 405
 
 
-api.add_resource(ProductApi, '/product/<int:id>', strict_slashes=False)
+api.add_resource(ProductApi, '/api/v1/product/<int:id>', strict_slashes=False)
