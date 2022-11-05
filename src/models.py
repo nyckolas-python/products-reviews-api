@@ -27,7 +27,8 @@ class Product(db.Model):
 class Review(db.Model):
     __tablename__ = "reviews"
     id = db.Column(db.Integer, primary_key=True)
-    product_id = db.Column(db.String, db.ForeignKey("products.id"), index=True)
+    product_id = db.Column(db.Integer,
+        db.ForeignKey("products.id"), index=True, nullable=False)
     title = db.Column(db.String(128), nullable=False)
     review = db.Column(db.Text, nullable=False)
 
