@@ -34,7 +34,7 @@ class ProductApi(Resource):
 
         return self.product_schema.dump(product), 200
 
-    def post(self):
+    def post(self, id=None):
         return {'message': 'method not allowed'}, 405
 
     # @cache.cached()
@@ -57,5 +57,5 @@ class ProductApi(Resource):
 
         return self.product_schema.dump(product), 201
 
-    def delete(self):
+    def delete(self, id=None):
         return {'message': 'method not allowed'}, 405
