@@ -12,13 +12,14 @@ db.sqlite3
 *.sql.gz
 .cache
 .project
-.idea
+.idea/
+.vscode/
 .pydevproject
 .idea/workspace.xml
 .DS_Store
 .sass-cache
 .vagrant/
-__pycache__
+*/__pycache__/
 dist
 docs
 env
