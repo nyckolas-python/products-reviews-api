@@ -16,13 +16,15 @@ use command to give permissions run:
 5. Run `docker-compose up --build`
 6. If you have error /data/db: permission denied failed to solve run:
 `sudo chmod -R 777 ./data/db`
-7. Run migrations by `docker exec -it flask_api_web flask db upgrade`
-8. Run to load dataset to DB `docker exec -it flask_api_web python csv_db_inserts_one.py`
+7. DB init by `docker exec -it flask_api_web flask db init`
+8. Make migrations by `docker exec -it flask_api_web flask db migrate -m "Add Product, Review"`
+9. Run migrations by `docker exec -it flask_api_web flask db upgrade`
+10. Run to load dataset to DB `docker exec -it flask_api_web python csv_db_inserts_one.py`
 If an error occurs, repeat the command.
-9. Open http://localhost:5050/browser/ in browser pgAdmin
-10. Open http://localhost:5000/api/v1/product/1/reviews in browser to view product and his reviews.
-11. Open http://localhost:5000/api/v1/product/1/reviews?page=1 in browser to paginate thrue reviews.
-12. You can use PUT with JSON to create new review. Example:
+11. Open http://localhost:5050/browser/ in browser pgAdmin
+12. Open http://localhost:5000/api/v1/product/1/reviews in browser to view product and his reviews.
+13. Open http://localhost:5000/api/v1/product/1/reviews?page=1 in browser to paginate thrue reviews.
+14. You can use PUT with JSON to create new review. Example:
 
 ```
    curl -X PUT http://localhost:5000/api/v1/product/1/reviews
