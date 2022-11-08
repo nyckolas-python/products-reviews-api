@@ -3,7 +3,7 @@ import config
 from flask import Flask
 from flask_migrate import Migrate
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy, get_debug_queries
+from flask_sqlalchemy import SQLAlchemy, record_queries
 from flask_caching import Cache
 
 
@@ -19,7 +19,7 @@ app.debug = True
 
 
 def sql_debug(response):
-    queries = list(get_debug_queries())
+    queries = list(record_queries.get_recorded_queries())
     total_duration = 0.0
     for q in queries:
         total_duration += q.duration
